@@ -3,6 +3,8 @@
 
 //Last thing after we're done with everything is to check if anything in the code could be implemented
 //in a better different more efficient way and add comments if necessary
+//The only problem in exc handling is that when i use cerr instead of cout, it is unpredictable where is the
+//message is gonna be printed (one pos solution is to use cout instead of cerr)
 
 int main() {
     //Cases
@@ -52,6 +54,12 @@ int main() {
     cout << endl << vec6.capacity() << endl << vec6.size() << endl;
     cout << vec6 << endl;
 
-    cout << vec6[100];
+    vec6.erase(vec6.begin() + 2, vec6.begin() + 9);
+    vec6.erase(vec6.begin());
+    cout << vec6 << endl;
+    vec6.insert(vec6.begin(), 6);
+    vec6.insert(vec6.begin() + 1, 5);
+    vec6.insert(vec6.begin() + 2, 3);
+    cout << vec6 << endl;
     return 0;
 }

@@ -23,19 +23,15 @@ public:
     MSVector<int> operator=(MSVector<T>&&) noexcept ;
 
     // Access operator
-    T& operator[](int);  // Throw an exception if out of range
+    T& operator[](int);
 
     // Modifying operations
     int push_back(T);
     T pop_back();
-    void erase(T*);        // Remove item at iterator
-                           // Throw exception if invalid iter
-    void erase(T*, T*);    // Remove items between
-                           // iterator 1 <= iterator 2 otherwise do nothing
-                           // Throw exception if any iterator outside range
+    void erase(T*);
+    void erase(T*, T*);
     void clear();
-    void insert(T*, T);    // Insert item at iterator
-                           // Throw exception if invalid
+    void insert(T*, T);
 
     // Iterators
     T* begin();
@@ -54,9 +50,10 @@ public:
     // Friend overloaded operator
     // It is working, but I don't know why couldn't it be implemented in the source file itself
     friend ostream& operator << (ostream& out, MSVector<T> vec) {
-        for (int i = 0; i < vec.Size; ++i) {
-            out << vec.vector[i] << ' ';
-        }
+        if (!vec.empty())
+            for (int i = 0; i < vec.Size; ++i) {
+                out << vec.vector[i] << ' ';
+            }
         //out << endl;
         return out;
     }

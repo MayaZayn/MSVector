@@ -129,13 +129,39 @@ T MSVector<T>::pop_back() {
 }
 
 template<class T>
-void MSVector<T>::erase(T* iterator) {
+void MSVector<T>::erase(T* itr) {
+    try {
+        if (itr - vector < 0 || itr - vector >= Size)
+            throw " Invalid Iterator!\n";
+        for (int i = itr - vector; i < Size - 1; ++i) {
+            *(vector + i) = *(vector + i + 1);
+        }
+        Size--;
+    } catch(const char* error) {
+        cerr << error << endl;
+        cout << "ERR 105 -> ";
+        exit(105);
+    }
 
 }
 
 template<class T>
-void MSVector<T>::erase(T* iterator1, T* iterator2) {
-
+void MSVector<T>::erase(T* itr1, T* itr2) {
+    if (itr2 - vector >= itr1 - vector) {
+        try {
+            if (itr1 - vector < 0 || itr1 - vector >= Size || itr2 - vector < 0 || itr2 - vector >= Size)
+                throw " Invalid Iterator!\n";
+            Size -= ((itr2 - vector) - (itr1 - vector));
+            Size--;
+            for (int i = itr1 - vector; i < Size; ++i) {
+                *(vector + i) = *(vector + i + ((itr2 - vector) - (itr1 - vector)) + 1);
+            }
+        } catch(const char* error) {
+            cerr << error << endl;
+            cout << "ERR 111 -> ";
+            exit(111);
+        }
+    }
 }
 
 template<class T>
@@ -146,8 +172,20 @@ void MSVector<T>::clear() {
 }
 
 template<class T>
-void MSVector<T>::insert(T* iterator, T) {
-
+void MSVector<T>::insert(T* itr, T val) {
+    Size++;
+    if (Size >= Capacity) {
+        for (int i = Size - 1; i >= itr - vector; --i) {
+            vector[i + 1] = vector[i];
+        }
+        vector[itr - vector] = val;
+    } else {
+        Capacity *= 2;
+        for (int i = Size - 1; i >= itr - vector; --i) {
+            vector[i + 1] = vector[i];
+        }
+        vector[itr - vector] = val;
+    }
 }
 
 template<class T>
@@ -155,7 +193,6 @@ T* MSVector<T>::begin() {
     return vector;
 }
 
-//Would this work?
 template<class T>
 T* MSVector<T>::end() {
     return vector + Size - 1;
