@@ -57,7 +57,7 @@ public:
         for (int i = 0; i < vec.Size; ++i) {
             out << vec.vector[i] << ' ';
         }
-        out << endl;
+        //out << endl;
         return out;
     }
 };

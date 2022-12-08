@@ -50,7 +50,8 @@ int main() {
     cout << vec6.size() << endl << vec6.capacity();
     vec6.push_back(5);
     cout << endl << vec6.capacity() << endl << vec6.size() << endl;
-    cout << vec6;
+    cout << vec6 << endl;
 
+    cout << vec6[100];
     return 0;
 }

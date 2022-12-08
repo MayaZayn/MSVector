@@ -65,7 +65,7 @@ MSVector<T> &MSVector<T>::operator=(const MSVector<T> &otherVector) {
 
 template<class T>
 MSVector<int> MSVector<T>::operator=(MSVector<T> && otherVector) noexcept {
-    //noexcept??
+    //noexcept?? means it throws no exceptions
     //we removed const from the parameter of the move assignment
     if (this->vector != otherVector.vector) {
         //check this! how to call the constructor here
@@ -86,8 +86,15 @@ MSVector<int> MSVector<T>::operator=(MSVector<T> && otherVector) noexcept {
 
 template<class T>
 T &MSVector<T>::operator[](int index) {
-    //Exception handling!
-    return vector[index];
+    try {
+        if (index < 0 || index >= Size)
+            throw " Index is Out of Range!\n";
+        return vector[index];
+    } catch (const char* error) {
+        cout << "ERR 101 -> ";
+        cerr << error;
+        exit(101);
+    }
 }
 
 template<class T>
