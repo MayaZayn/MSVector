@@ -12,15 +12,12 @@ MSVector<T>::MSVector(int sz) {
     Size = sz;
     Capacity = 2;
     while (Capacity <= Size) {
-        Capacity *= 2;
+        resize();
     }
-    vector = new T[Capacity];
-    //Initialize vector to empty either zero or empty string
 }
 
 template<class T>
 MSVector<T>::MSVector(T *ptr, int n) {
-    //check this! how to call the constructor here
     Size = n;
     Capacity = 2;
     while (Capacity <= Size) {
@@ -36,7 +33,7 @@ template<class T>
 MSVector<T>::MSVector(const MSVector &otherVector) {
     this->Size = otherVector.Size;
     this->Capacity = otherVector.Capacity;
-    vector = nullptr;
+    delete[] vector;
     vector = new T[Capacity];
     for (int i = 0; i < otherVector.Size; ++i) {
         this->vector[i] = otherVector.vector[i];
@@ -45,16 +42,17 @@ MSVector<T>::MSVector(const MSVector &otherVector) {
 
 template<class T>
 MSVector<T>::~MSVector() {
+    Size = 0;
+    Capacity = 0;
     delete[] vector;
 }
 
 template<class T>
 MSVector<T> &MSVector<T>::operator=(const MSVector<T> &otherVector) {
     if (this->vector != otherVector.vector) {
-        //check this! how to call the constructor here
         this->Size = otherVector.Size;
         this->Capacity = otherVector.Capacity;
-        vector = nullptr;
+        delete[] vector;
         vector = new T[Capacity];
         for (int i = 0; i < otherVector.Size; ++i) {
             this->vector[i] = otherVector.vector[i];
@@ -65,10 +63,7 @@ MSVector<T> &MSVector<T>::operator=(const MSVector<T> &otherVector) {
 
 template<class T>
 MSVector<int> MSVector<T>::operator=(MSVector<T> && otherVector) noexcept {
-    //noexcept?? means it throws no exceptions
-    //we removed const from the parameter of the move assignment
     if (this->vector != otherVector.vector) {
-        //check this! how to call the constructor here
         this->Size = otherVector.Size;
         this->Capacity = otherVector.Capacity;
         vector = nullptr;
@@ -76,7 +71,6 @@ MSVector<int> MSVector<T>::operator=(MSVector<T> && otherVector) noexcept {
         for (int i = 0; i < otherVector.Size; ++i) {
             this->vector[i] = otherVector.vector[i];
         }
-        //otherVector.vector = nullptr;
         delete[] otherVector.vector;
         otherVector.Size = 0;
         otherVector.Capacity = 0;
@@ -113,7 +107,6 @@ int MSVector<T>::push_back(T val) {
         }
         tmpVector[Size++] = val;
 
-        //Dif between nutllptr and delete
         delete[] this->vector;
         vector = tmpVector;
         tmpVector = nullptr;
@@ -129,7 +122,7 @@ T MSVector<T>::pop_back() {
 }
 
 template<class T>
-void MSVector<T>::erase(T* itr) {
+void MSVector<T>::erase(iterator itr) {
     try {
         if (itr - vector < 0 || itr - vector >= Size)
             throw " Invalid Iterator!\n";
@@ -146,7 +139,7 @@ void MSVector<T>::erase(T* itr) {
 }
 
 template<class T>
-void MSVector<T>::erase(T* itr1, T* itr2) {
+void MSVector<T>::erase(iterator itr1, iterator itr2) {
     if (itr2 - vector >= itr1 - vector) {
         try {
             if (itr1 - vector < 0 || itr1 - vector >= Size || itr2 - vector < 0 || itr2 - vector >= Size)
@@ -172,7 +165,7 @@ void MSVector<T>::clear() {
 }
 
 template<class T>
-void MSVector<T>::insert(T* itr, T val) {
+void MSVector<T>::insert(iterator itr, T val) {
     Size++;
     if (Size >= Capacity) {
         for (int i = Size - 1; i >= itr - vector; --i) {
@@ -189,12 +182,12 @@ void MSVector<T>::insert(T* itr, T val) {
 }
 
 template<class T>
-T* MSVector<T>::begin() {
+typename MSVector<T>::iterator MSVector<T>::begin() {
     return vector;
 }
 
 template<class T>
-T* MSVector<T>::end() {
+typename MSVector<T>::iterator MSVector<T>::end() {
     return vector + Size - 1;
 }
 
@@ -246,7 +239,10 @@ int MSVector<T>::capacity() const {
 
 template<class T>
 int MSVector<T>::resize() {
-    return 0;
+    delete[] vector;
+    Capacity *= 2;
+    vector = new T[Capacity];
+    return Capacity;
 }
 
 template<class T>

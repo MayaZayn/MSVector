@@ -7,10 +7,9 @@ using namespace std;
 template<class T>
 class MSVector {
 private:
-    //How can we use std::iterator or should be just typedef?
     T *vector = new T[2];
     int Size, Capacity;
-//    typedef T* iterator;
+    typedef T* iterator;
 
 public:
     // Constructors and Big 5
@@ -28,14 +27,14 @@ public:
     // Modifying operations
     int push_back(T);
     T pop_back();
-    void erase(T*);
-    void erase(T*, T*);
+    void erase(iterator);
+    void erase(iterator, iterator);
     void clear();
-    void insert(T*, T);
+    void insert(iterator, T);
 
     // Iterators
-    T* begin();
-    T* end();
+    iterator begin();
+    iterator end();
 
     // 2 comparison operators
     bool operator==(const MSVector<T>&);
@@ -44,17 +43,14 @@ public:
     // Capacity operators
     int size() const;
     int capacity() const;
-    int resize();         // Relocate to bigger space
+    int resize();
     bool empty();
 
-    // Friend overloaded operator
-    // It is working, but I don't know why couldn't it be implemented in the source file itself
     friend ostream& operator << (ostream& out, MSVector<T> vec) {
         if (!vec.empty())
             for (int i = 0; i < vec.Size; ++i) {
                 out << vec.vector[i] << ' ';
             }
-        //out << endl;
         return out;
     }
 };
