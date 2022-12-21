@@ -6,6 +6,7 @@
 //The only problem in exc handling is that when i use cerr instead of cout, it is unpredictable where is the
 //message is gonna be printed (one pos solution is to use cout instead of cerr)
 
+
 int main() {
     //Cases
 

@@ -1,6 +1,7 @@
 #include "MSVector.h"
 
 template<class T>
+
 MSVector<T>::MSVector() {
     Capacity = 0;
     Size = 0;
@@ -17,6 +18,12 @@ MSVector<T>::MSVector(int sz) {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param ptr
+ * @param n
+ */
 MSVector<T>::MSVector(T *ptr, int n) {
     Size = n;
     Capacity = 2;
@@ -30,6 +37,11 @@ MSVector<T>::MSVector(T *ptr, int n) {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param otherVector
+ */
 MSVector<T>::MSVector(const MSVector &otherVector) {
     this->Size = otherVector.Size;
     this->Capacity = otherVector.Capacity;
@@ -48,6 +60,12 @@ MSVector<T>::~MSVector() {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param otherVector
+ * @return
+ */
 MSVector<T> &MSVector<T>::operator=(const MSVector<T> &otherVector) {
     if (this->vector != otherVector.vector) {
         this->Size = otherVector.Size;
@@ -62,6 +80,12 @@ MSVector<T> &MSVector<T>::operator=(const MSVector<T> &otherVector) {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param otherVector
+ * @return
+ */
 MSVector<int> MSVector<T>::operator=(MSVector<T> && otherVector) noexcept {
     if (this->vector != otherVector.vector) {
         this->Size = otherVector.Size;
@@ -79,6 +103,12 @@ MSVector<int> MSVector<T>::operator=(MSVector<T> && otherVector) noexcept {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param index
+ * @return
+ */
 T &MSVector<T>::operator[](int index) {
     try {
         if (index < 0 || index >= Size)
@@ -92,6 +122,12 @@ T &MSVector<T>::operator[](int index) {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param val
+ * @return
+ */
 int MSVector<T>::push_back(T val) {
     if (Size < Capacity) {
         if (Size == 0)
@@ -122,6 +158,11 @@ T MSVector<T>::pop_back() {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param itr
+ */
 void MSVector<T>::erase(iterator itr) {
     try {
         if (itr - vector < 0 || itr - vector >= Size)
@@ -139,6 +180,12 @@ void MSVector<T>::erase(iterator itr) {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param itr1
+ * @param itr2
+ */
 void MSVector<T>::erase(iterator itr1, iterator itr2) {
     if (itr2 - vector >= itr1 - vector) {
         try {
@@ -165,6 +212,12 @@ void MSVector<T>::clear() {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param itr
+ * @param val
+ */
 void MSVector<T>::insert(iterator itr, T val) {
     Size++;
     if (Size >= Capacity) {
@@ -192,6 +245,12 @@ typename MSVector<T>::iterator MSVector<T>::end() {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param otherVector
+ * @return
+ */
 bool MSVector<T>::operator==(const MSVector<T> &otherVector) {
     if (this->Size == otherVector.Size) {
         for (int i = 0; i < Size; ++i) {
@@ -205,6 +264,12 @@ bool MSVector<T>::operator==(const MSVector<T> &otherVector) {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @param otherVector
+ * @return
+ */
 bool MSVector<T>::operator<(const MSVector<T> &otherVector) {
     //Check if this needs to make sure that the sizes of the 2 vectors are equal
     bool allMinEqual = true;
@@ -233,11 +298,21 @@ int MSVector<T>::size() const {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @return
+ */
 int MSVector<T>::capacity() const {
     return Capacity;
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @return
+ */
 int MSVector<T>::resize() {
     delete[] vector;
     Capacity *= 2;
@@ -246,6 +321,11 @@ int MSVector<T>::resize() {
 }
 
 template<class T>
+/**
+ *
+ * @tparam T
+ * @return
+ */
 bool MSVector<T>::empty() {
     if (Size > 0)
         return false;

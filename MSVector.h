@@ -3,8 +3,12 @@
 
 #include <iostream>
 using namespace std;
-
+/**
+ *
+ * @tparam T
+ */
 template<class T>
+
 class MSVector {
 private:
     T *vector = new T[2];
